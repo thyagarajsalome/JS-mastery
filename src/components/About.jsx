@@ -1,61 +1,90 @@
 import React from "react";
-import { Tilt } from "react-tilt";
-import { motion } from "framer-motion";
+import { Card } from "@/components/ui/card";
 
-import { styles } from "../styles";
-import { services } from "../constants";
-import { fadeIn, textVariant } from "../utils/motion"; // Fixed missing quote and semicolon
-
-const ServiceCard = ({ index, title, icon }) => (
-  <Tilt className="xs:w-[250px] w-full">
-    <motion.div
-      variants={fadeIn("right", "spring", index * 0.5, 0.75)}
-      className="w-full green-pink-gradient p-[1px] rounded-[20px] shadow-card"
-    >
-      <div
-        options={{
-          max: 45,
-          scale: 1,
-          speed: 450,
-        }}
-        className="bg-tertiary rounded-[20px] py-5 px-12 min-h-[280px] flex justify-evenly items-center flex-col"
-      >
-        <img
-          src={icon}
-          alt="web-development"
-          className="w-16 h-16 object-contain"
-        />
-
-        <h3 className="text-white text-[20px] font-bold text-center">
-          {title}
-        </h3>
+const ServiceCard = ({ title, icon }) => (
+  <div className="w-full sm:w-[250px]">
+    <Card className="overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+      <div className="bg-gradient-to-r from-purple-500 to-pink-500 p-px rounded-lg">
+        <div className="bg-slate-900 rounded-lg py-5 px-12 min-h-[280px] flex justify-evenly items-center flex-col">
+          <img
+            src={icon}
+            alt={`${title} icon`}
+            className="w-16 h-16 object-contain"
+          />
+          <h3 className="text-white text-xl font-bold text-center">{title}</h3>
+        </div>
       </div>
-    </motion.div>
-  </Tilt>
+    </Card>
+  </div>
 );
 
 const About = () => {
+  // Sample services data (replace with your actual services)
+  const services = [
+    {
+      title: "Web Development",
+      icon: "/api/placeholder/64/64",
+    },
+    {
+      title: "React Development",
+      icon: "/api/placeholder/64/64",
+    },
+    {
+      title: "Three.js Development",
+      icon: "/api/placeholder/64/64",
+    },
+    {
+      title: "Backend Development",
+      icon: "/api/placeholder/64/64",
+    },
+  ];
+
   return (
-    <>
-      <motion.div variants={textVariant()}>
-        <p className={styles.sectionSubText}>Intrduction</p>
-        <h2 className={styles.sectionHeadText}>Overview</h2>
-      </motion.div>
-      <motion.p
-        variants={fadeIn("", "", 0.1, 1)}
-        className="mt-4 text-secondary text-[17px] max-w-3xl leading-[30px]"
-      >
-        I'm passionate about building user-friendly web applications that
-        leverage the power of 3D visualization. My current project focuses on
-        creating a platform where users can explore and interact with products
-        in a fully realized 3D environment.
-      </motion.p>
-      <div className="mt-20 flex flex-wrap gap-10">
-        {services.map((service, index) => (
-          <ServiceCard key={service.title} index={index} {...service} />
-        ))}
+    <div className="w-full min-h-screen flex flex-col items-start">
+      <div className="w-full">
+        <div
+          className="animate-fade-in"
+          style={{
+            animation: "fadeIn 1s ease-out",
+          }}
+        >
+          <p className="text-blue-400 text-lg sm:text-xl">Introduction</p>
+          <h2 className="text-white font-black text-3xl sm:text-5xl mt-2">
+            Overview.
+          </h2>
+        </div>
+
+        <p className="mt-4 text-gray-400 text-base sm:text-lg max-w-3xl leading-relaxed animate-fade-in">
+          I'm a skilled software developer with experience in TypeScript and
+          JavaScript, and expertise in frameworks like React, Node.js, and
+          Three.js. I'm a quick learner and collaborate closely with clients to
+          create efficient, scalable, and user-friendly solutions that solve
+          real-world problems. Let's work together to bring your ideas to life!
+        </p>
+
+        <div className="mt-20 flex flex-wrap gap-10 justify-center sm:justify-start">
+          {services.map((service, index) => (
+            <ServiceCard key={service.title} {...service} />
+          ))}
+        </div>
       </div>
-    </>
+
+      <style jsx>{`
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        .animate-fade-in {
+          animation: fadeIn 1s ease-out;
+        }
+      `}</style>
+    </div>
   );
 };
 
